@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">BatteryStatusReport</string>
+    <string name="str_not_connected">Not connected</string>
+    <string name="str_ac_plugged">Connected to AC Adapter</string>
+    <string name="str_usb_plugged">Connected with USB</string>
+    <string name="str_connect_to_charger_msg">Its time to connect to the charger</string>
+    <string name="str_next_activity">Next Activity</string>
+    <string name="str_battery_status">Battery Status</string>
 </resources>

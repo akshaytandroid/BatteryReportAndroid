@@ -5,36 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
     TextView batteryStatusTextView;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        batteryStatusTextView = (TextView) findViewById(R.id.batteryStatusInfo);
-
-        registerBatteryLevelReceiver();
-    }
-
-    private void registerBatteryLevelReceiver() {
-        IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-        registerReceiver(battery_broadcast_receiver, filter);
-    }
-
-    @Override
-    protected void onDestroy() {
-        unregisterReceiver(battery_broadcast_receiver);
-        super.onDestroy();
-    }
-
+    Button nextBtn;
     private BroadcastReceiver battery_broadcast_receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -72,6 +53,33 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        batteryStatusTextView = (TextView) findViewById(R.id.batteryStatusInfo);
+        nextBtn = (Button) findViewById(R.id.nextAct);
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ChargeDetector.class));
+            }
+        });
+        registerBatteryLevelReceiver();
+    }
+
+    private void registerBatteryLevelReceiver() {
+        IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+        registerReceiver(battery_broadcast_receiver, filter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(battery_broadcast_receiver);
+        super.onDestroy();
+    }
 
     private String getPlugTypeString(int plugged) {
         String plugType = "Unknown";
